@@ -8,13 +8,13 @@ const jwtsecret = process.env.JWT_SECRET as string;
 
 export const RegisterUser = async (req: Request, res: Response) => {
   try {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
+    const fullname = req.body.fullname;
     const email = req.body.email;
     const password = req.body.password;
+    const profile_picture = req.body.profile_picture;
     const confirm_password = req.body.confirm_password;
-    const phoneNumber = req.body.phoneNumber;
-    const age = req.body.age;
+    const phone_number = req.body.phone_number;
+    const country = req.body.country;
 
     //validate user
 
@@ -31,12 +31,12 @@ export const RegisterUser = async (req: Request, res: Response) => {
 
     if (!user) {
       const newUser = await User.create({
-        firstName,
-        lastName,
+        fullname,
         email,
         password: passwordHash,
-        phoneNumber,
-        age,
+        profile_picture,
+        phone_number,
+        country,
       });
       return res.status(200).json({
         message: "Registtration Successful",
