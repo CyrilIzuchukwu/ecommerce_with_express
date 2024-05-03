@@ -1,8 +1,7 @@
 import Joi from "joi";
 
 export const RegisterSchema = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
+  fullname: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string()
     .min(6)
@@ -13,8 +12,9 @@ export const RegisterSchema = Joi.object({
     .required()
     .label("confirm password")
     .messages({ "any.only": "{{#label}} does not match" }),
-  phoneNumber: Joi.string().required(),
-  age: Joi.number().required(),
+  profile_picture: Joi.string(),
+  phone_number: Joi.string().required(),
+  country: Joi.string().required(),
 });
 
 export const LoginSchema = Joi.object({
@@ -34,12 +34,14 @@ export const option = {
   },
 };
 
-export const creatTodoSchema = Joi.object({
-  description: Joi.string().required(),
-  completed: Joi.boolean().required()
-})
+export const creatProductSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  pictures: Joi.array().items(Joi.string()),
+});
 
-export const updateTodoSchema = Joi.object({
-  description: Joi.string().required(),
-  completed: Joi.boolean().required()
-})    
+export const updateProductSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  pictures: Joi.array().items(Joi.string()),
+});

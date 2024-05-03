@@ -1,12 +1,12 @@
 import express from "express";
-import auth from "../middlewares/auth";
+import auth from "../library/middlewares/auth";
 import {
   createTodo,
   updateTodo,
   getTodos,
   getUserTodos,
   deleteSingleTodo,
-  singleTodo
+  singleTodo,
 } from "../controllers/todoController";
 
 const router = express.Router();

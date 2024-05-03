@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { creatTodoSchema, updateTodoSchema, option } from "../utils/utils";
-import Todo from "../model/todoModel";
+import { creatProductSchema, updateProductSchema, option } from "../utils/utils";
+import Todo from "../model/ecommerceModel";
 
 export const createTodo = async (req: Request | any, res: Response) => {
   try {
     const verify = req.user;
 
     //validate todo form inputs
-    const validateUser = creatTodoSchema.validate(req.body, option);
+    const validateUser = creatProductSchema.validate(req.body, option);
 
     if (validateUser.error) {
       res.status(400).json({ Error: validateUser.error.details[0].message });
@@ -31,7 +31,7 @@ export const updateTodo = async (req: Request, res: Response) => {
     const { description, completed } = req.body;
     const { id } = req.params;
     //validate todo form inputs
-    const validateUser = updateTodoSchema.validate(req.body, option);
+    const validateUser = updateProductSchema.validate(req.body, option);
 
     if (validateUser.error) {
       res.status(400).json({ Error: validateUser.error.details[0].message });
