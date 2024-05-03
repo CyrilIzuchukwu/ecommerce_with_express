@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSingleProduct = exports.getUserProducts = exports.singleProduct = exports.getProducts = exports.updateProduct = exports.createProduct = void 0;
 const utils_1 = require("../utils/utils");
 const ecommerceModel_1 = __importDefault(require("../model/ecommerceModel"));
+const userModel_1 = __importDefault(require("../model/userModel"));
 const cloudinary_1 = require("cloudinary");
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -109,7 +110,7 @@ const singleProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         res.status(200).json({
             msg: "Products successfully fetched",
-            getsingleProducts
+            getsingleProducts,
         });
     }
     catch (error) {
@@ -119,8 +120,12 @@ const singleProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.singleProduct = singleProduct;
 const getUserProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId } = req.params;
-        const getAllUserProducts = yield ecommerceModel_1.default.find({ user: userId });
+        const { id } = req.params;
+        const user = yield userModel_1.default.findById(id);
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" });
+        }
+        const getAllUserProducts = yield ecommerceModel_1.default.find({ user: user._id });
         res.status(200).json({
             msg: "Products successfully fetched",
             getAllUserProducts,
@@ -142,7 +147,7 @@ const deleteSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, func
         }
         res.status(200).json({
             message: "Product successfully deleted",
-            deleteSingleRecord
+            deleteSingleRecord,
         });
     }
     catch (error) {
