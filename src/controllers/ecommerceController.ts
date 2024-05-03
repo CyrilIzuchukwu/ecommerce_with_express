@@ -40,7 +40,7 @@ export const createProduct = async (req: Request | any, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const { description, completed } = req.body;
+    const { pictures, ...rest } = req.body;
     const { id } = req.params;
     //validate Product form inputs
     const validateUser = updateProductSchema.validate(req.body, option);
@@ -58,8 +58,8 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
     const updateRecord = await Ecommerce.findByIdAndUpdate(id,
       {
-        description,
-        completed,
+        ...rest,
+        pictures,
       },
 
       {
