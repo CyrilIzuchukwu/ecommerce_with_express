@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { creatProductSchema, updateProductSchema, option } from "../utils/utils";
 import Ecommerce from "../model/ecommerceModel";
+import { v2 as cloudinaryV2 } from "cloudinary";
 
 export const createProduct = async (req: Request | any, res: Response) => {
   try {
@@ -13,9 +14,20 @@ export const createProduct = async (req: Request | any, res: Response) => {
       res.status(400).json({ Error: validateUser.error.details[0].message });
     }
 
+    let links = [];
+    if (Array.isArray(req.files) && req.files.length > 0) {
+      // Upload images to Cloudinary and retrieve their URLs
+      links = await Promise.all(req.files.map(async (item: Record<string, any>) => {
+        const result = await cloudinaryV2.uploader.upload(item.path);
+        return result.secure_url;
+      }));
+    }
+
+
     const newProduct = await Ecommerce.create({
-      ...req.body,
+      ...validateUser.value,
       user: verify._id,
+      pictures: links.join(","),
     });
 
     return res

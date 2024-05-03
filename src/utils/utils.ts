@@ -35,13 +35,18 @@ export const option = {
 };
 
 export const creatProductSchema = Joi.object({
-  title: Joi.string().required(),
-  content: Joi.string().required(),
+  item_name: Joi.string().required(),
+  category: Joi.string().required(),
+  price: Joi.string().required(),
+  description: Joi.string().required(),
   pictures: Joi.array().items(Joi.string()),
 });
 
+
 export const updateProductSchema = Joi.object({
-  title: Joi.string().required(),
-  content: Joi.string().required(),
+  item_name: Joi.string().required(),
+  category: Joi.string().required(),
+  price: Joi.string().required(),
+  description: Joi.string().required(),
   pictures: Joi.array().items(Joi.string()),
 });
