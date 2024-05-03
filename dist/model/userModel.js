@@ -4,16 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
-    firstName: { type: String },
-    lastName: { type: String },
+    fullname: { type: String },
     email: { type: String },
     password: { type: String },
-    phoneNumber: { type: String },
-    age: { type: String },
-    todos: [
+    profile_picture: { type: String },
+    phone_number: { type: String },
+    country: { type: String },
+    ecommerce: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "todo"
+            ref: "ecommerce"
         }
     ]
 }, {

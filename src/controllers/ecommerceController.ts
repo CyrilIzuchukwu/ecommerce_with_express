@@ -27,7 +27,7 @@ export const createProduct = async (req: Request | any, res: Response) => {
     const newProduct = await Ecommerce.create({
       ...validateUser.value,
       user: verify._id,
-      pictures: links.join(","),
+      pictures: links,
     });
 
     return res

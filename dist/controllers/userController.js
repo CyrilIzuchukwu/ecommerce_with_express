@@ -17,33 +17,39 @@ const utils_1 = require("../utils/utils");
 const userModel_1 = __importDefault(require("../model/userModel"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const cloudinary_1 = require("cloudinary");
 const jwtsecret = process.env.JWT_SECRET;
 const RegisterUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const firstName = req.body.firstName;
-        const lastName = req.body.lastName;
+        const fullname = req.body.fullname;
         const email = req.body.email;
         const password = req.body.password;
+        const profile_picture = req.body.profile_picture;
         const confirm_password = req.body.confirm_password;
-        const phoneNumber = req.body.phoneNumber;
-        const age = req.body.age;
+        const phone_number = req.body.phone_number;
+        const country = req.body.country;
         const validateUser = utils_1.RegisterSchema.validate(req.body, utils_1.option);
         if (validateUser.error) {
             res.status(400).json({ Error: validateUser.error.details[0].message });
         }
         const passwordHash = yield bcryptjs_1.default.hash(password, yield bcryptjs_1.default.genSalt(12));
         const user = yield userModel_1.default.findOne({ email: email });
+        let pictureUrl = "";
+        if (req.file) {
+            const result = yield cloudinary_1.v2.uploader.upload(req.file.path);
+            pictureUrl = result.secure_url;
+        }
         if (!user) {
             const newUser = yield userModel_1.default.create({
-                firstName,
-                lastName,
+                fullname,
                 email,
                 password: passwordHash,
-                phoneNumber,
-                age,
+                profile_picture: pictureUrl,
+                phone_number,
+                country,
             });
             return res.status(200).json({
-                message: "Registtration Successful",
+                message: "Registration Successful",
                 data: newUser,
             });
         }

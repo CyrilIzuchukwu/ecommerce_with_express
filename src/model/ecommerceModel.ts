@@ -10,7 +10,7 @@ const ecommerceSchema = new mongoose.Schema(
     category: { type: String },
     price: { type: String},
     description: { type: String },
-    pictures: { type: String},
+    pictures: [{ type: String }], 
     user: [
       {
         type: mongoose.Schema.Types.ObjectId,
