@@ -135,7 +135,7 @@ export const getUserProducts = async (req: Request, res: Response) => {
 
     const getAllUserProducts = await Ecommerce.find({ user: user._id });
 
-    if(!getAllUserProducts){
+    if(getAllUserProducts.length === 0){
       return res.status(404).json({ msg: "User has no products" });
     }
 
