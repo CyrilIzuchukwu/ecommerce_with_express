@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "compile": "tsc -w"
+    "start": "node ./bin/www",
+    "compile": "tsc -w",
+    "build": "tsc"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
